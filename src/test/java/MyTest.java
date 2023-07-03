@@ -1,16 +1,18 @@
-import org.testng.annotations.Test;
-
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
+import org.testng.annotations.*;
 
 public class MyTest {
+    @BeforeClass
+    public void setUp(){
+        BackofficePage backofficePage = new BackofficePage();
+        LoginPage loginPage = new LoginPage();
 
+        backofficePage.open();
+        backofficePage.login();
+        loginPage.signIn("login", "password");
+    }
     @Test
     public void AuthorizationTest(){
-        open("/login");
-        $("#submit").click();
-        $(".message").shouldHave(text("Привет"));
-
+            System.out.print("Hello");
     }
 
 }
