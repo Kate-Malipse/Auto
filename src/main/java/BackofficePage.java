@@ -9,6 +9,7 @@ public class BackofficePage {
     private final SelenideElement partnersSection = $("a[href=\"/partners\"");
     private final SelenideElement rulesAndHintsList = $$("aside > div > ul > li > div > span").findBy(text("Правила и подсказки"));
     private final SelenideElement howToPlaySection = $("a[href=\"/rules-and-tooltips/how-to-play\"]");
+    protected final SelenideElement pageTitle = $("h3");
 
     /**
      * Переход на страницу бэкофиса
@@ -34,5 +35,6 @@ public class BackofficePage {
     public void openHowToPlaySection() {
         rulesAndHintsList.shouldBe(visible).click();
         howToPlaySection.shouldBe(visible).click();
+        pageTitle.shouldBe(visible);
     }
 }

@@ -1,3 +1,4 @@
+import com.beust.jcommander.Parameter;
 import jdk.jfr.Description;
 import org.testng.annotations.*;
 
@@ -18,10 +19,11 @@ public class BackOfficeTests {
         HowToPlayPage howToPlayPage = new HowToPlayPage();
         backofficePage.openHowToPlaySection();
 
-        assert howToPlayPage.pageTitle.equals("Как играть (настройки)");
+        assert howToPlayPage.getTitle().equals("Как играть (настройки)");
         assert howToPlayPage.availableGames().stream()
                 .anyMatch(s -> s.equals("Футбол"));
 
 
     }
+
 }

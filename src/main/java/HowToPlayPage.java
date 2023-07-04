@@ -6,10 +6,8 @@ import java.util.ArrayList;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class HowToPlayPage {
-    private final SelenideElement pageTitleElement = $("h3");
+public class HowToPlayPage extends BackofficePage {
     private final ElementsCollection gamesListElements = $$("div.ant-tabs-nav-list > div.ant-tabs-tab");
-    public final String pageTitle = pageTitleElement.innerText();
 
     /**
      * Список игр, доступных для выбора на странице
@@ -25,5 +23,9 @@ public class HowToPlayPage {
             gamesList.add(i.innerText().trim());
         }
         return gamesList;
+    }
+
+    public String getTitle(){
+        return this.pageTitle.innerText();
     }
 }
