@@ -1,7 +1,7 @@
 import jdk.jfr.Description;
 import org.testng.annotations.*;
 
-public class MyTest {
+public class BackOfficeTests {
     BackofficePage backofficePage = new BackofficePage();
     LoginPage loginPage = new LoginPage();
 
@@ -14,7 +14,7 @@ public class MyTest {
 
     @Test
     @Description("Как играть (настройки). Отображение новой игры")
-    public void GameIsAvailableInHowToPlaySection() {
+    public void gameIsAvailableInHowToPlaySection() {
         HowToPlayPage howToPlayPage = new HowToPlayPage();
         backofficePage.openHowToPlaySection();
 
