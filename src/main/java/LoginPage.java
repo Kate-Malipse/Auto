@@ -5,19 +5,22 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class LoginPage {
     private final SelenideElement usernameField = $("input#Username");
-    private final SelenideElement passwordField = $("#Password");
-    private final SelenideElement captchaCheckbox = $("span#recaptcha-anchor > div");
+    private final SelenideElement passwordField = $("input#Password");
+    private final SelenideElement captcha = $("iframe[title=\"reCAPTCHA\"]");
     private final SelenideElement loginButton = $("button#recaptcha");
-    public void signIn(String login, String password){
-        usernameField.shouldBe(visible);
-        passwordField.shouldBe(visible);
 
-        usernameField.setValue(login);
-        passwordField.setValue(password);
+    /**
+     * Авторизация в БО
+     *
+     * @param login    логин полльзователя
+     * @param password пароль пользователя
+     */
+    public void signIn(String login, String password) {
+        usernameField.shouldBe(visible).setValue(login);
+        passwordField.shouldBe(visible).setValue(password);
 
-        captchaCheckbox.click();
+        captcha.shouldBe(visible).click();
 
-        loginButton.shouldBe(enabled);
-        loginButton.click();
+        loginButton.shouldBe(enabled).click();
     }
 }
