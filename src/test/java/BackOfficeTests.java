@@ -1,16 +1,20 @@
-import com.beust.jcommander.Parameter;
 import jdk.jfr.Description;
 import org.testng.annotations.*;
+import java.util.ResourceBundle;
 
 public class BackOfficeTests {
     BackofficePage backofficePage = new BackofficePage();
     LoginPage loginPage = new LoginPage();
+    ResourceBundle rb = ResourceBundle.getBundle("constant");
+    String login = rb.getString("backOfficeLogin");
+    String password = rb.getString("backOfficePassword");
+
 
     @BeforeClass
     public void setUp() {
         backofficePage.open();
         backofficePage.login();
-        loginPage.signIn("login", "password");
+        loginPage.signIn(login, password);
     }
 
     @Test
@@ -22,7 +26,6 @@ public class BackOfficeTests {
         howToPlayPage
                 .hasTitle("Как играть (настройки)")
                 .hasGameInTabList("Футбол");
-                //.hasGameInTabList("1БЕТ");
     }
 
 }

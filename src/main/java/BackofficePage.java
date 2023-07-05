@@ -1,15 +1,15 @@
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 
-import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 
 public class BackofficePage {
+    ResourceBundle rb = ResourceBundle.getBundle("constant");
     private final SelenideElement loginButton = $$("button > span").findBy(text("LOG IN"));
     private final SelenideElement partnersSection = $("a[href=\"/partners\"");
     private final SelenideElement rulesAndHintsList = $$("aside > div > ul > li > div > span").findBy(text("Правила и подсказки"));
@@ -23,7 +23,7 @@ public class BackofficePage {
      * Переход на страницу бэкофиса
      */
     public void open() {
-        Selenide.open("https://backoffice.tvbet.bet/");
+        Selenide.open(rb.getString("backOfficeUrl"));
     }
 
     /**
@@ -46,26 +46,45 @@ public class BackofficePage {
         pageTitle.shouldBe(visible);
     }
 
-    protected void hasPageTitle(String title){
+    /**
+     * Проверяет отображение заголовка страницы
+     *
+     * @param title текст заголовка
+     */
+    protected void hasPageTitle(String title) {
         pageTitle
                 .shouldBe(visible)
                 .shouldHave(exactText(title));
     }
 
+    /**
+     * Проверяет виден ли текст элемента в таб списке
+     *
+     * @param tabName текст элемента
+     */
     protected void hasTabElementWithName(String tabName) {
-        var elem = tabsElements
-                .shouldHave(sizeGreaterThan(0))
-                .findBy(exactText(tabName));
-
-        if (elem.exists()) {
-            elem.shouldBe(visible);
+        SelenideElement element = findTabElementInCollection(tabsElements, tabName);
+        if(element.exists()) {
+            element.shouldBe(visible);
             return;
         }
+        tabButton
+                .shouldBe(enabled)
+                .click();
+        element = findTabElementInCollection(additionalTabsElements, tabName);
+        element.shouldBe(visible);
+    }
 
-        tabButton.shouldBe(enabled).click();
-        additionalTabsElements
+    /**
+     * Ищет текст элемента в коллекции элементов
+     *
+     * @param collection коллекция элементов
+     * @param itemName текст внутри элемента
+     * @return найденый элемент
+     */
+    private SelenideElement findTabElementInCollection(ElementsCollection collection, String itemName) {
+        return collection
                 .shouldHave(sizeGreaterThan(0))
-                .findBy(exactText(tabName))
-                .shouldBe(visible);
+                .findBy(exactText(itemName));
     }
 }
