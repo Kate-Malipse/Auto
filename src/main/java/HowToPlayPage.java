@@ -1,31 +1,22 @@
 import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.Condition.*;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
-import java.util.ArrayList;
-
 import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Condition.*;
 
 public class HowToPlayPage extends BackofficePage {
-    private final ElementsCollection gamesListElements = $$("div.ant-tabs-nav-list > div.ant-tabs-tab");
 
-    /**
-     * Список игр, доступных для выбора на странице
-     *
-     * @return список игр
-     */
-    public ArrayList<String> availableGames() {
-        ArrayList<String> gamesList = new ArrayList<>();
-
-        gamesListElements.shouldHave(CollectionCondition.sizeGreaterThan(0));
-
-        for (SelenideElement i : gamesListElements) {
-            gamesList.add(i.innerText().trim());
-        }
-        return gamesList;
+    private final SelenideElement tabButton = $("div.ant-tabs-nav-operations > button");
+    private final ElementsCollection additionalGameList = $$("div.ant-tabs-dropdown > ul > li");
+    public HowToPlayPage hasTitle(String title){
+        hasPageTitle(title);
+        return this;
     }
 
-    public String getTitle(){
-        return this.pageTitle.innerText();
+    public HowToPlayPage hasGameInTabList(String game) {
+        hasTabElementWithName(game);
+        return this;
     }
 }

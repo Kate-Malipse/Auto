@@ -12,7 +12,7 @@ public class LoginPage {
     /**
      * Авторизация в БО
      *
-     * @param login    логин полльзователя
+     * @param login    логин пользователя
      * @param password пароль пользователя
      */
     public void signIn(String login, String password) {

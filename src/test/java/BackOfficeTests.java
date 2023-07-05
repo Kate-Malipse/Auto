@@ -19,11 +19,10 @@ public class BackOfficeTests {
         HowToPlayPage howToPlayPage = new HowToPlayPage();
         backofficePage.openHowToPlaySection();
 
-        assert howToPlayPage.getTitle().equals("Как играть (настройки)");
-        assert howToPlayPage.availableGames().stream()
-                .anyMatch(s -> s.equals("Футбол"));
-
-
+        howToPlayPage
+                .hasTitle("Как играть (настройки)")
+                .hasGameInTabList("Футбол");
+                //.hasGameInTabList("1БЕТ");
     }
 
 }
