@@ -5,19 +5,20 @@ import com.codeborne.selenide.SelenideElement;
 import java.util.ResourceBundle;
 
 import static com.codeborne.selenide.CollectionCondition.*;
+import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 
 public class BackofficePage {
-    ResourceBundle rb = ResourceBundle.getBundle("constant");
-    private final SelenideElement loginButton = $$("button > span").findBy(text("LOG IN"));
+    private final ResourceBundle rb = ResourceBundle.getBundle("constant");
+    private final SelenideElement loginButton = $(byXpath("//span[text()= 'LOG IN']"));
     private final SelenideElement partnersSection = $("a[href=\"/partners\"");
-    private final SelenideElement rulesAndHintsList = $$("aside > div > ul > li > div > span").findBy(text("Правила и подсказки"));
+    private final SelenideElement rulesAndHintsList = $(byXpath("//aside/div/ul/li/div/span[text()='Правила и подсказки']"));
     private final SelenideElement howToPlaySection = $("a[href=\"/rules-and-tooltips/how-to-play\"]");
     protected final SelenideElement pageTitle = $("h3");
-    protected final ElementsCollection tabsElements = $$("div.ant-tabs-nav-list > div.ant-tabs-tab > div");
-    protected final ElementsCollection additionalTabsElements = $$("div.ant-tabs-dropdown > ul > li");
-    private final SelenideElement tabButton = $("div.ant-tabs-nav-operations > button");
+    protected final ElementsCollection tabsElements = $$(byXpath("//div[@class= 'ant-tabs-nav-list']/div[@class='ant-tabs-tab']"));
+    protected final ElementsCollection additionalTabsElements = $$(byXpath("//ul[@aria-label='expanded dropdown']/li"));
+    private final SelenideElement tabButton = $(byXpath("//div[@class='ant-tabs-nav-operations']/button"));
 
     /**
      * Переход на страницу бэкофиса
@@ -51,10 +52,11 @@ public class BackofficePage {
      *
      * @param title текст заголовка
      */
-    protected void hasPageTitle(String title) {
+    protected BackofficePage hasPageTitle(String title) {
         pageTitle
                 .shouldBe(visible)
                 .shouldHave(exactText(title));
+        return this;
     }
 
     /**
@@ -62,24 +64,27 @@ public class BackofficePage {
      *
      * @param tabName текст элемента
      */
-    protected void hasTabElementWithName(String tabName) {
+    public BackofficePage hasTabWithName(String tabName) {
         SelenideElement element = findTabElementInCollection(tabsElements, tabName);
-        if(element.exists()) {
-            element.shouldBe(visible);
-            return;
+
+        if (!element.exists()) {
+            tabButton
+                    .shouldBe(enabled)
+                    .click();
+
+            element = findTabElementInCollection(additionalTabsElements, tabName);
         }
-        tabButton
-                .shouldBe(enabled)
-                .click();
-        element = findTabElementInCollection(additionalTabsElements, tabName);
+
         element.shouldBe(visible);
+
+        return this;
     }
 
     /**
      * Ищет текст элемента в коллекции элементов
      *
      * @param collection коллекция элементов
-     * @param itemName текст внутри элемента
+     * @param itemName   текст внутри элемента
      * @return найденый элемент
      */
     private SelenideElement findTabElementInCollection(ElementsCollection collection, String itemName) {
