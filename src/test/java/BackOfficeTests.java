@@ -18,7 +18,7 @@ public class BackOfficeTests {
 
     @Test
     @Description("Как играть (настройки). Отображение новой игры")
-    public void gameIsAvailableInHowToPlaySection() {
+    public void footballIsAvailableInHowToPlaySection() {
         backofficePage.openHowToPlaySection();
 
         new HowToPlayPage()
@@ -26,4 +26,14 @@ public class BackOfficeTests {
                 .hasTabWithName("Футбол");
     }
 
+    @Test
+    @Description("Создать джекпот. ППС")
+    public void jackpotIsCreatedForPPS() {
+        backofficePage.openPartnersSection();
+
+        new PartnersPage()
+                .hasPageTitle("Партнёры")
+                .searchPartner("6005");
+
+    }
 }
