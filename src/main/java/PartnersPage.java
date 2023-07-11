@@ -65,7 +65,7 @@ public class PartnersPage extends BackofficePage {
 
     public PartnersPage contextMenuHasItems(String[] contextItems) {
         contextItemsElement
-                .shouldBe(CollectionCondition.exactTextsCaseSensitive(contextItems));
+                .shouldBe(exactTextsCaseSensitive(contextItems));
         return this;
     }
 
@@ -95,13 +95,14 @@ public class PartnersPage extends BackofficePage {
 
         popUpItemLabels
                 .shouldHave(sizeGreaterThan(0))
-                .findBy(exactText("Название джекпота"))
-                .shouldBe(visible);
+                .shouldBe(exactTextsCaseSensitive("Название джекпота", "Клиенты"));
+//                .findBy(exactText("Название джекпота"))
+//                .shouldBe(visible);
 
-        popUpItemLabels
-                .shouldHave(sizeGreaterThan(0))
-                .findBy(exactText("Клиенты"))
-                .shouldBe(visible);
+//        popUpItemLabels
+//                .shouldHave(sizeGreaterThan(0))
+//                .findBy(exactText("Клиенты"))
+//                .shouldBe(visible);
 
         popUpItemInputControls
                 .shouldHave(sizeGreaterThan(0))
