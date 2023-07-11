@@ -11,14 +11,14 @@ import static com.codeborne.selenide.Condition.*;
 
 public class BackofficePage {
     private final ResourceBundle rb = ResourceBundle.getBundle("constant");
-    private final SelenideElement loginButton = $(byXpath("//span[text()= 'LOG IN']"));
+    private final SelenideElement loginButton = $x("//span[text()= 'LOG IN']");
     private final SelenideElement partnersSection = $("a[href=\"/partners\"");
-    private final SelenideElement rulesAndHintsList = $(byXpath("//aside/div/ul/li/div/span[text()='Правила и подсказки']"));
+    private final SelenideElement rulesAndHintsList = $x("//aside//span[text()='Правила и подсказки']");
     private final SelenideElement howToPlaySection = $("a[href=\"/rules-and-tooltips/how-to-play\"]");
     protected final SelenideElement pageTitle = $("h3");
-    protected final ElementsCollection tabsElements = $$(byXpath("//div[@class= 'ant-tabs-nav-list']/div[@class='ant-tabs-tab']"));
-    protected final ElementsCollection additionalTabsElements = $$(byXpath("//ul[@aria-label='expanded dropdown']/li"));
-    private final SelenideElement tabButton = $(byXpath("//div[@class='ant-tabs-nav-operations']/button"));
+    private final SelenideElement tabButton = $x("//div[@class='ant-tabs-nav-operations']/button");
+    protected final ElementsCollection tabsElements = $$x("//div[@class= 'ant-tabs-nav-list']/div[@class='ant-tabs-tab']");
+    protected final ElementsCollection additionalTabsElements = $$x("//ul[@aria-label='expanded dropdown']/li");
 
     /**
      * Переход на страницу бэкофиса

@@ -33,7 +33,13 @@ public class BackOfficeTests {
 
         new PartnersPage()
                 .hasPageTitle("Партнёры")
-                .searchPartner("6005");
-
+                .searchPartner("6005")
+                .openPartnerContextMenu()
+//                .partnerElementHasCorrectContext(new String[] {"Создать кассу", "Джекпот", "Набор джекпотов", "Редактировать", "Клонировать", "Удалить"})
+                .contextMenuHasItems(new String[] {"Редактировать", "Удалить"})
+                .selectContextItem("Джекпот");
+//                // maybe 'is jackpop pupup visible'
+//                .jackpotPopUpHasAppeared();
+                //.newJackpotIsSaved()
     }
 }
