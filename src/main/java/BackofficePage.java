@@ -34,6 +34,9 @@ public class BackofficePage {
         loginButton.shouldBe(visible).click();
     }
 
+    /**
+     * Открытие раздела Партнеры
+     */
     public void openPartnersSection() {
         partnersSection.shouldBe(visible).click();
     }

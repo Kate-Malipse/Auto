@@ -33,13 +33,14 @@ public class BackOfficeTests {
 
         new PartnersPage()
                 .hasPageTitle("Партнёры")
-                .searchPartner("6005")
+                .searchPartner("Test_pps_jp")
                 .openPartnerContextMenu()
-//                .partnerElementHasCorrectContext(new String[] {"Создать кассу", "Джекпот", "Набор джекпотов", "Редактировать", "Клонировать", "Удалить"})
-                .contextMenuHasItems(new String[] {"Редактировать", "Удалить"})
+                .contextMenuHasItems(new String[] {"Создать кассу", "Джекпот", "Набор джекпотов", "Редактировать", "Клонировать", "Удалить"})
                 .selectContextItem("Джекпот");
-//                // maybe 'is jackpop pupup visible'
-//                .jackpotPopUpHasAppeared();
-                //.newJackpotIsSaved()
+
+        new PopUpPage()
+                .jackpotPopUpIsVisible()
+                .createJackpot("Test_JP");
+
     }
 }

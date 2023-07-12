@@ -1,4 +1,3 @@
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.apache.commons.lang3.StringUtils;
@@ -10,14 +9,12 @@ import static com.codeborne.selenide.Selenide.*;
 public class PartnersPage extends BackofficePage {
 
     private final SelenideElement searchField = $("input#partner-search");
-    private final SelenideElement selectedPartner = $x("//span[contains(@class, 'ant-tree-node-selected')]//span[@class='tree-item-id']");
-    private final SelenideElement searchResult = $("span.search-id-by-type");
-    private final SelenideElement popUpHeader = $x("//div[@class='ant-modal-body']/form/h4");
-    private final SelenideElement popUpSaveButton = $x("//div[@class='ant-modal-body']/form/button");
+    private final SelenideElement selectedPartnerId = $x("//span[contains(@class, 'ant-tree-node-selected')]//span[@class='tree-item-id']");
+    private final SelenideElement selectedPartnerName = $x("//span[contains(@class, 'ant-tree-node-selected')]//span[@class='tree-item-text']");
+    private final SelenideElement searchResultId = $("span.search-id-by-type");
+    private final SelenideElement searchResultName = $("span.search-result-name");
     private final ElementsCollection contextItemsElement = $$x("//div[@class='react-contexify__item']/div[@class='react-contexify__item__content']");
     private final ElementsCollection partnersTree = $$("div.ant-tree-treenode");
-    private final ElementsCollection popUpItemLabels = $$x("//div[@class='ant-modal-body']/form//label");
-    private final ElementsCollection popUpItemInputControls = $$x("//div[@class='ant-modal-body']/form//input");
 
     /**
      * Поиск партнера в дереве по id партнера
@@ -25,24 +22,50 @@ public class PartnersPage extends BackofficePage {
      * @param partnerId id партнера
      * @return найденный элемент
      */
-    public PartnersPage searchPartner(String partnerId) {
+    public PartnersPage searchPartner(Integer partnerId) {
         partnersTree.shouldHave(sizeGreaterThan(0));
         searchField
                 .shouldBe(visible)
-                .setValue(partnerId)
-                .shouldHave(value(partnerId))
+                .setValue(partnerId.toString())
+                .shouldHave(value(partnerId.toString()))
                 .pressEnter();
 
-        String formattedPartnerId = formatPartnerId(partnerId);
+        String formattedPartnerId = formatPartnerId(partnerId.toString());
 
-        searchResult
+        searchResultId
                 .shouldBe(visible)
                 .shouldHave(text(formattedPartnerId))
                 .click();
 
-        selectedPartner
+        selectedPartnerId
                 .shouldBe(visible)
                 .shouldHave(text(formattedPartnerId));
+
+        return this;
+    }
+
+    /**
+     * Поиск партнера в дереве по имени партнера
+     *
+     * @param name имя партнера
+     * @return найденный элемент
+     */
+    public PartnersPage searchPartner(String name) {
+        partnersTree.shouldHave(sizeGreaterThan(0));
+        searchField
+                .shouldBe(visible)
+                .setValue(name)
+                .shouldHave(value(name))
+                .pressEnter();
+
+        searchResultName
+                .shouldBe(visible)
+                .shouldHave(text(name))
+                .click();
+
+        selectedPartnerName
+                .shouldBe(visible)
+                .shouldHave(text(name));
 
         return this;
     }
@@ -58,58 +81,45 @@ public class PartnersPage extends BackofficePage {
      * @param partnerId id партнера
      * @return отформатированный id
      */
-    private String formatPartnerId(String partnerId)
-    {
+    private String formatPartnerId(String partnerId) {
         return "[" + StringUtils.leftPad(partnerId, 6, '0') + "]";
     }
 
+    /**
+     * Проверяет пункты в контекстном меню.
+     *
+     * @param contextItems список пунктов меню
+     * @return найденные элементы
+     */
     public PartnersPage contextMenuHasItems(String[] contextItems) {
         contextItemsElement
                 .shouldBe(exactTextsCaseSensitive(contextItems));
         return this;
     }
 
+    /**
+     * Открытие контекстного меню через нажатие ПКМ на партнера в дереве
+     *
+     * @return найденный элемент
+     */
     public PartnersPage openPartnerContextMenu() {
-        selectedPartner
+        selectedPartnerId
                 .shouldBe(visible)
                 .contextClick();
         return this;
     }
 
+    /**
+     * Выбор пункта из контекстного меню партнера
+     *
+     * @param contextItem пункт меню
+     * @return найденный элемент
+     */
     public PartnersPage selectContextItem(String contextItem) {
         contextItemsElement
                 .shouldHave(sizeGreaterThan(0))
                 .findBy(exactText(contextItem))
                 .click();
-        return this;
-    }
-
-    public PartnersPage jackpotPopUpHasAppeared() {
-        popUpHeader
-                .shouldBe(visible)
-                .shouldHave(exactText("Создать джекпот"));
-
-        popUpSaveButton
-                .shouldBe(visible)
-                .shouldBe(enabled);
-
-        popUpItemLabels
-                .shouldHave(sizeGreaterThan(0))
-                .shouldBe(exactTextsCaseSensitive("Название джекпота", "Клиенты"));
-//                .findBy(exactText("Название джекпота"))
-//                .shouldBe(visible);
-
-//        popUpItemLabels
-//                .shouldHave(sizeGreaterThan(0))
-//                .findBy(exactText("Клиенты"))
-//                .shouldBe(visible);
-
-        popUpItemInputControls
-                .shouldHave(sizeGreaterThan(0))
-                .findBy(attribute("placeholder", "Название джекпота"))
-                .shouldBe(visible)
-                .shouldBe(editable);
-
         return this;
     }
 }
