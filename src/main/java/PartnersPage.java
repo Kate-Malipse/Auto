@@ -1,6 +1,9 @@
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.Keys;
+
+import java.time.Duration;
 
 import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.*;
@@ -11,8 +14,10 @@ public class PartnersPage extends BackofficePage {
     private final SelenideElement searchField = $("input#partner-search");
     private final SelenideElement selectedPartnerId = $x("//span[contains(@class, 'ant-tree-node-selected')]//span[@class='tree-item-id']");
     private final SelenideElement selectedPartnerName = $x("//span[contains(@class, 'ant-tree-node-selected')]//span[@class='tree-item-text']");
-    private final SelenideElement searchResultId = $("span.search-id-by-type");
-    private final SelenideElement searchResultName = $("span.search-result-name");
+    private final ElementsCollection searchResultsId = $$("span.search-id-by-type");
+    private final ElementsCollection searchResultsName = $$("span.search-result-name");
+    private final SelenideElement alertNotificationMessage = $x("//div[@role='alert']/div[@class='ant-notification-notice-message']");
+    private final SelenideElement alertNotificationDescription = $x("//div[@role='alert']/div[@class='ant-notification-notice-description']");
     private final ElementsCollection contextItemsElement = $$x("//div[@class='react-contexify__item']/div[@class='react-contexify__item__content']");
     private final ElementsCollection partnersTree = $$("div.ant-tree-treenode");
 
@@ -26,15 +31,21 @@ public class PartnersPage extends BackofficePage {
         partnersTree.shouldHave(sizeGreaterThan(0));
         searchField
                 .shouldBe(visible)
+                /* для очистки поля ввода т.к. clear() не работает */
+                .press(Keys.chord(Keys.CONTROL, "a"))
+                .press(Keys.BACK_SPACE)
+                .shouldHave(value(""));
+
+        searchField
                 .setValue(partnerId.toString())
                 .shouldHave(value(partnerId.toString()))
                 .pressEnter();
 
         String formattedPartnerId = formatPartnerId(partnerId.toString());
 
-        searchResultId
-                .shouldBe(visible)
-                .shouldHave(text(formattedPartnerId))
+        searchResultsId
+                .shouldHave(sizeGreaterThan(0))
+                .findBy(exactText(formattedPartnerId))
                 .click();
 
         selectedPartnerId
@@ -54,13 +65,19 @@ public class PartnersPage extends BackofficePage {
         partnersTree.shouldHave(sizeGreaterThan(0));
         searchField
                 .shouldBe(visible)
+                /* для очистки поля ввода т.к. clear() не работает */
+                .press(Keys.chord(Keys.CONTROL, "a"))
+                .press(Keys.BACK_SPACE)
+                .shouldHave(value(""));
+
+        searchField
                 .setValue(name)
                 .shouldHave(value(name))
                 .pressEnter();
 
-        searchResultName
-                .shouldBe(visible)
-                .shouldHave(text(name))
+        searchResultsName
+                .shouldHave(sizeGreaterThan(0))
+                .findBy(exactText(name))
                 .click();
 
         selectedPartnerName
@@ -120,6 +137,25 @@ public class PartnersPage extends BackofficePage {
                 .shouldHave(sizeGreaterThan(0))
                 .findBy(exactText(contextItem))
                 .click();
+        return this;
+    }
+
+    /**
+     * Проверяет появление и исчезание нотификации об успехе действия
+     *
+     * @return найденный элемент
+     */
+    public PartnersPage successAlertHasAppeared() {
+        alertNotificationMessage
+                .shouldBe(visible)
+                .shouldHave(exactText("Успех"));
+
+        alertNotificationDescription
+                .shouldBe(visible)
+                .shouldHave(exactText("Операция прошла успешно"));
+
+        alertNotificationMessage
+                .shouldNotBe(visible, Duration.ofSeconds(5));
         return this;
     }
 }

@@ -30,17 +30,19 @@ public class BackOfficeTests {
     @Description("Создать джекпот. ППС")
     public void jackpotIsCreatedForPPS() {
         backofficePage.openPartnersSection();
+        String jackpotName = java.util.UUID.randomUUID().toString().replace("-", "");
 
         new PartnersPage()
                 .hasPageTitle("Партнёры")
                 .searchPartner("Test_pps_jp")
                 .openPartnerContextMenu()
-                .contextMenuHasItems(new String[] {"Создать кассу", "Джекпот", "Набор джекпотов", "Редактировать", "Клонировать", "Удалить"})
+                .contextMenuHasItems(new String[]{"Создать кассу", "Джекпот", "Набор джекпотов", "Редактировать", "Клонировать", "Удалить"})
                 .selectContextItem("Джекпот");
 
         new PopUpPage()
                 .jackpotPopUpIsVisible()
-                .createJackpot("Test_JP");
-
+                .createJackpot(jackpotName)
+                .successAlertHasAppeared()
+                .searchPartner(jackpotName);
     }
 }

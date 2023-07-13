@@ -5,13 +5,18 @@ import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
-public class PopUpPage extends BackofficePage {
+public class PopUpPage extends PartnersPage {
     private final SelenideElement popUpHeader = $x("//div[@class='ant-modal-body']/form/h4");
     private final SelenideElement popUpSaveButton = $x("//div[@class='ant-modal-body']/form/button");
     private final SelenideElement jackpotPopUpClientField = $x("//div[@class='ant-modal-body']/form//div[@class='ant-select-selector']");
     private final ElementsCollection popUpItemLabels = $$x("//div[@class='ant-modal-body']/form//label");
     private final ElementsCollection popUpItemInputControls = $$x("//div[@class='ant-modal-body']/form//input");
 
+    /**
+     * Проверяет элементы поп-апа Джекпот
+     *
+     * @return найденный элемент
+     */
     public PopUpPage jackpotPopUpIsVisible() {
         popUpHeader
                 .shouldBe(visible)
@@ -38,6 +43,12 @@ public class PopUpPage extends BackofficePage {
         return this;
     }
 
+    /**
+     * Создает узел Джекпот
+     *
+     * @param jackpotName имя узла
+     * @return найденный элемент
+     */
     public PopUpPage createJackpot(String jackpotName) {
         popUpItemInputControls
                 .shouldHave(sizeGreaterThan(0))
@@ -50,6 +61,7 @@ public class PopUpPage extends BackofficePage {
         popUpSaveButton
                 .shouldBe(enabled)
                 .click();
+
         return this;
     }
 }
