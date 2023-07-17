@@ -1,3 +1,5 @@
+package BackOffice.Partners;
+
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 

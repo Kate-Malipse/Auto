@@ -1,3 +1,5 @@
+package BackOffice;
+
 public class HowToPlayPage extends BackofficePage {
 
     @Override

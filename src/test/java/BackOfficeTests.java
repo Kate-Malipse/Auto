@@ -1,3 +1,8 @@
+import BackOffice.BackofficePage;
+import BackOffice.HowToPlayPage;
+import BackOffice.Partners.BetSettingsPage;
+import BackOffice.Partners.PartnersPage;
+import BackOffice.Partners.PopUpPage;
 import jdk.jfr.Description;
 import org.testng.annotations.*;
 

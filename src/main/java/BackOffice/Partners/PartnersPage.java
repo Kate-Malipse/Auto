@@ -1,3 +1,6 @@
+package BackOffice.Partners;
+
+import BackOffice.BackofficePage;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.apache.commons.lang3.StringUtils;

@@ -1,3 +1,6 @@
+package BackOffice.Partners;
+
+import BackOffice.BackofficePage;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
 
