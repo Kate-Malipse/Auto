@@ -3,7 +3,6 @@ import BackOffice.HowToPlayPage;
 import BackOffice.Partners.BetSettingsPage;
 import BackOffice.Partners.PartnersPage;
 import BackOffice.Partners.PopUpPage;
-import jdk.jfr.Description;
 import org.testng.annotations.*;
 
 import java.util.ResourceBundle;
@@ -21,8 +20,7 @@ public class BackOfficeTests {
         new LoginPage().signIn(login, password);
     }
 
-    @Test
-    @Description("Как играть (настройки). Отображение новой игры")
+    @Test(description = "Как играть (настройки). Отображение новой игры")
     public void footballIsAvailableInHowToPlaySection() {
         backofficePage.openHowToPlaySection();
 
@@ -31,8 +29,7 @@ public class BackOfficeTests {
                 .selectTabWithName("Футбол");
     }
 
-    @Test
-    @Description("Создать джекпот. ППС")
+    @Test(description = "Создать джекпот. ППС")
     public void jackpotIsCreatedForPPS() {
         backofficePage.openPartnersSection();
         String jackpotName = java.util.UUID.randomUUID().toString().replace("-", "");
@@ -51,8 +48,7 @@ public class BackOfficeTests {
                 .searchPartner(jackpotName);
     }
 
-    @Test
-    @Description("Максимальный коэффициент Системы. Доступность ввода")
+    @Test(description = "Максимальный коэффициент Системы. Доступность ввода")
     public void maxSystemBetCoefficientFieldIsEditable() {
         backofficePage.openPartnersSection();
 
