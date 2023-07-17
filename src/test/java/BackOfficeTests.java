@@ -23,7 +23,7 @@ public class BackOfficeTests {
 
         new HowToPlayPage()
                 .hasPageTitle("Как играть (настройки)")
-                .hasTabWithName("Футбол");
+                .selectTabWithName("Футбол");
     }
 
     @Test
@@ -44,5 +44,20 @@ public class BackOfficeTests {
                 .createJackpot(jackpotName)
                 .successAlertHasAppeared()
                 .searchPartner(jackpotName);
+    }
+
+    @Test
+    @Description("Максимальный коэффициент Системы. Доступность ввода")
+    public void maxSystemBetCoefficientFieldIsEditable() {
+        backofficePage.openPartnersSection();
+
+        new PartnersPage()
+                .hasPageTitle("Партнёры")
+                .searchPartner(6026)
+                .selectTabWithName("Настройки ставок");
+
+        new BetSettingsPage()
+                .switcherSystemBetsHasState("true")
+                .maxSystemBetCoefficientFieldSetValue("10");
     }
 }

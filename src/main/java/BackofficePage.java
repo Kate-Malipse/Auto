@@ -5,7 +5,6 @@ import com.codeborne.selenide.SelenideElement;
 import java.util.ResourceBundle;
 
 import static com.codeborne.selenide.CollectionCondition.*;
-import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 
@@ -67,7 +66,7 @@ public class BackofficePage {
      *
      * @param tabName текст элемента
      */
-    public BackofficePage hasTabWithName(String tabName) {
+    public BackofficePage selectTabWithName(String tabName) {
         SelenideElement element = findTabElementInCollection(tabsElements, tabName);
 
         if (!element.exists()) {
@@ -78,7 +77,9 @@ public class BackofficePage {
             element = findTabElementInCollection(additionalTabsElements, tabName);
         }
 
-        element.shouldBe(visible);
+        element
+                .shouldBe(visible)
+                .click();
 
         return this;
     }

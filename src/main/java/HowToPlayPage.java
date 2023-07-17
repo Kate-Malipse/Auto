@@ -6,7 +6,7 @@ public class HowToPlayPage extends BackofficePage {
     }
 
     @Override
-    public HowToPlayPage hasTabWithName(String tabName) {
-        return (HowToPlayPage) super.hasTabWithName(tabName);
+    public HowToPlayPage selectTabWithName(String tabName) {
+        return (HowToPlayPage) super.selectTabWithName(tabName);
     }
 }

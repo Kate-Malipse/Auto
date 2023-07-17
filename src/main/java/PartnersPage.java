@@ -34,11 +34,11 @@ public class PartnersPage extends BackofficePage {
                 /* для очистки поля ввода т.к. clear() не работает */
                 .press(Keys.chord(Keys.CONTROL, "a"))
                 .press(Keys.BACK_SPACE)
-                .shouldHave(value(""));
+                .shouldHave(exactValue(""));
 
         searchField
                 .setValue(partnerId.toString())
-                .shouldHave(value(partnerId.toString()))
+                .shouldHave(exactValue(partnerId.toString()))
                 .pressEnter();
 
         String formattedPartnerId = formatPartnerId(partnerId.toString());
