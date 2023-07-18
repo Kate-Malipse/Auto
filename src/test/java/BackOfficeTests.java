@@ -6,6 +6,7 @@ import BackOffice.Partners.PopUpPage;
 import org.testng.annotations.*;
 
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public class BackOfficeTests {
     private final BackofficePage backofficePage = new BackofficePage();
@@ -32,7 +33,7 @@ public class BackOfficeTests {
     @Test(description = "Создать джекпот. ППС")
     public void jackpotIsCreatedForPPS() {
         backofficePage.openPartnersSection();
-        String jackpotName = java.util.UUID.randomUUID().toString().replace("-", "");
+        String jackpotName = UUID.randomUUID().toString().replace("-", "");
 
         new PartnersPage()
                 .hasPageTitle("Партнёры")
@@ -58,7 +59,7 @@ public class BackOfficeTests {
                 .selectTabWithName("Настройки ставок");
 
         new BetSettingsPage()
-                .switcherSystemBetsHasState("true")
-                .maxSystemBetCoefficientFieldSetValue("10");
+                .switcherSystemBetsHasState(true)
+                .maxSystemBetCoefficientFieldSetValue(10.5);
     }
 }

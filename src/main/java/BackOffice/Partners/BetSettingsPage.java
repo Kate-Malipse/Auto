@@ -17,20 +17,20 @@ public class BetSettingsPage extends BackofficePage {
      * @param state статус переключателя (true, false)
      * @return найденный элемент
      */
-    public BetSettingsPage switcherSystemBetsHasState(String state) {
+    public BetSettingsPage switcherSystemBetsHasState(Boolean state) {
         systemBetsSwitcher
                 .shouldBe(visible)
-                .shouldHave(attribute("aria-checked", state));
+                .shouldHave(attribute("aria-checked", state.toString()));
         return this;
     }
 
     /**
      * Устанавливает значение в поле "Максимальный коэффициент системы"
      *
-     * @param value вводимое значение
+     * @param coefficient вводимое значение
      * @return найденный элемент
      */
-    public BetSettingsPage maxSystemBetCoefficientFieldSetValue(String value) {
+    public BetSettingsPage maxSystemBetCoefficientFieldSetValue(Double coefficient) {
         maxSystemBetCoefficientField
                 /* для очистки поля ввода т.к. clear() не работает */
                 .press(Keys.chord(Keys.CONTROL, "a"))
@@ -40,8 +40,8 @@ public class BetSettingsPage extends BackofficePage {
         maxSystemBetCoefficientField
                 .shouldBe(visible)
                 .shouldBe(editable)
-                .setValue(value)
-                .shouldHave(exactValue(value));
+                .setValue(coefficient.toString())
+                .shouldHave(exactValue(coefficient.toString()));
         return this;
     }
 }
