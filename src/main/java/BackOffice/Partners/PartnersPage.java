@@ -114,6 +114,7 @@ public class PartnersPage extends BackofficePage {
     public PartnersPage contextMenuHasItems(String[] contextItems) {
         contextItemsElement
                 .shouldBe(exactTextsCaseSensitive(contextItems));
+
         return this;
     }
 
@@ -126,6 +127,7 @@ public class PartnersPage extends BackofficePage {
         selectedPartnerId
                 .shouldBe(visible)
                 .contextClick();
+
         return this;
     }
 
@@ -140,6 +142,7 @@ public class PartnersPage extends BackofficePage {
                 .shouldHave(sizeGreaterThan(0))
                 .findBy(exactText(contextItem))
                 .click();
+
         return this;
     }
 
@@ -159,6 +162,7 @@ public class PartnersPage extends BackofficePage {
 
         alertNotificationMessage
                 .shouldNotBe(visible, Duration.ofSeconds(5));
+
         return this;
     }
 }

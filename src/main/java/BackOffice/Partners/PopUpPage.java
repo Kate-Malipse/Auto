@@ -8,11 +8,11 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PopUpPage extends PartnersPage {
-    private final SelenideElement popUpHeader = $x("//div[@class='ant-modal-body']/form/h4");
-    private final SelenideElement popUpSaveButton = $x("//div[@class='ant-modal-body']/form/button");
-    private final SelenideElement jackpotPopUpClientField = $x("//div[@class='ant-modal-body']/form//div[@class='ant-select-selector']");
-    private final ElementsCollection popUpItemLabels = $$x("//div[@class='ant-modal-body']/form//label");
-    private final ElementsCollection popUpItemInputControls = $$x("//div[@class='ant-modal-body']/form//input");
+    private final SelenideElement popUpHeader = $x("//div[@class='ant-modal-body']//h4");
+    private final SelenideElement popUpSaveButton = $x("//div[@class='ant-modal-body']//button");
+    private final SelenideElement jackpotPopUpClientField = $x("//div[@class='ant-modal-body']//div[@class='ant-select-selector']");
+    private final ElementsCollection popUpItemLabels = $$x("//div[@class='ant-modal-body']//label");
+    private final ElementsCollection popUpItemInputControls = $$x("//div[@class='ant-modal-body']//input");
 
     /**
      * Проверяет элементы поп-апа Джекпот
@@ -42,6 +42,7 @@ public class PopUpPage extends PartnersPage {
                 .shouldBe(visible)
                 .shouldBe(editable)
                 .shouldHave(text("Клиенты (+"));
+
         return this;
     }
 

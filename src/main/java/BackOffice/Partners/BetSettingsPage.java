@@ -8,8 +8,8 @@ import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 
 public class BetSettingsPage extends BackofficePage {
-    private final SelenideElement systemBetsSwitcher = $x("//form[contains(@class, 'ant-form')]//div[@data-testid='setUpRates.form.allowSystem']/button[contains(@class, 'ant-switch')]");
-    private final SelenideElement maxSystemBetCoefficientField = $x("//form[contains(@class, 'ant-form')]//div[@data-testid='setUpRates.form.maxSystemBetCoefficient']/input[@class='ant-input']");
+    private final SelenideElement systemBetsSwitcher = $x("//div[@data-testid='setUpRates.form.allowSystem']/button[@role='switch']");
+    private final SelenideElement maxSystemBetCoefficientField = $x("//input[@name='maxSystemBetCoefficient']");
 
     /**
      * Проверяет статус переключателя "Разрешить ставки типа Система"
@@ -21,6 +21,7 @@ public class BetSettingsPage extends BackofficePage {
         systemBetsSwitcher
                 .shouldBe(visible)
                 .shouldHave(attribute("aria-checked", state.toString()));
+
         return this;
     }
 
@@ -42,6 +43,7 @@ public class BetSettingsPage extends BackofficePage {
                 .shouldBe(editable)
                 .setValue(coefficient.toString())
                 .shouldHave(exactValue(coefficient.toString()));
+
         return this;
     }
 }

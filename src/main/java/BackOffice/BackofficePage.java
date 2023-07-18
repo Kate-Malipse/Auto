@@ -60,6 +60,7 @@ public class BackofficePage {
         pageTitle
                 .shouldBe(visible)
                 .shouldHave(exactText(title));
+
         return this;
     }
 
